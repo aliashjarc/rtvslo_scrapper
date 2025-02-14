@@ -11,7 +11,7 @@ from collections import Counter
 
 # List of article URLs to scrape
 article_urls = [
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-z-epsko-predstavo-spisal-zgodovino-toura/536525"
+    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-z-epsko-predstavo-spisal-zgodovino-toura/536525",
     "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-po-tem-touru-je-primoz-se-vecji-zgled-zame/536656"
     # you can add more
 ]
