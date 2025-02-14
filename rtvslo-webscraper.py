@@ -11,12 +11,9 @@ from collections import Counter
 
 # List of article URLs to scrape
 article_urls = [
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacarju-bo-na-touru-pomagala-pricakovana-sedmerica/712576",
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/vingegaard-ostal-brez-kljucnega-pomocnika-kussa/712904",
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-se-nikoli-se-nisem-na-kolesu-pocutil-tako-dobro/713007",
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/roglic-pred-tourom-imamo-skupen-cilj-to-je-zmaga/713047",
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-pred-predstavitvijo-povedal-da-je-junija-prebolel-covid/713157",
-    "https://www.rtvslo.si/sport/sportni-sos/sos-odmev/v-firencah-veliko-pozitivne-energije-ze-v-soboto-se-pricakuje-vingegaardov-test/713191"
+    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-z-epsko-predstavo-spisal-zgodovino-toura/536525"
+    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-po-tem-touru-je-primoz-se-vecji-zgled-zame/536656"
+    # you can add more
 ]
 
 # Initialize WebDriver
