@@ -37,7 +37,7 @@ def sanitize_filename(text):
     text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode('utf-8')  # Remove special chars
     text = re.sub(r'[^a-z0-9\s-]', '', text)  # Remove unwanted characters
     text = "-".join(text.split()[:4])  # Take first 4 words, join with dashes
-    return text[:10]  # Limit filename length
+    return text[:16]  # Limit filename length
 
 def scrape_comments():
     """Extracts all comments from the currently loaded page."""
