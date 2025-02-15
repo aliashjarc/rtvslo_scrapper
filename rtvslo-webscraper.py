@@ -11,10 +11,10 @@ from collections import Counter
 
 # List of article URLs to scrape
 article_urls = [
-    "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-z-epsko-predstavo-spisal-zgodovino-toura/536525",
+     "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-z-epsko-predstavo-spisal-zgodovino-toura/536525",
     "https://www.rtvslo.si/sport/kolesarstvo/dirka-po-franciji/pogacar-po-tem-touru-je-primoz-se-vecji-zgled-zame/536656"
     # you can add more
-]
+    ]
 
 # Initialize WebDriver
 options = webdriver.ChromeOptions()
@@ -22,8 +22,11 @@ options.add_argument('--start-maximized')
 driver = webdriver.Chrome(options=options)
 
 def extract_date_time(full_timestamp):
+
     """Extracts date (DD.MM.YYYY) and time (HH:MM) from the full timestamp."""
+
     match = re.search(r"(\d{1,2})\.\s*(\d{1,2})\.\s*(\d{4}),\s*(\d{1,2}):(\d{2})", full_timestamp)
+
     if match:
         day, month, year, hour, minute = match.groups()
         formatted_date = f"{day.zfill(2)}.{month.zfill(2)}.{year}"
@@ -32,15 +35,38 @@ def extract_date_time(full_timestamp):
     return "Unknown", "Unknown"
 
 def sanitize_filename(text):
+
     """Convert special characters to ASCII, replace spaces with hyphens, and limit to 10 characters."""
+
     text = text.lower()
     text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode('utf-8')  # Remove special chars
     text = re.sub(r'[^a-z0-9\s-]', '', text)  # Remove unwanted characters
     text = "-".join(text.split()[:4])  # Take first 4 words, join with dashes
     return text[:10]  # Limit filename length
 
+def remove_repeated_text(text):
+
+    """Detects and removes repeated phrases or full duplicate comments."""
+
+    # Matches entire duplicate comments
+    pattern = r"^(.+?)\s*\1\s*$"
+    match = re.match(pattern, text)
+    if match:
+        # Keep only the first occurrence
+        return match.group(1)
+                
+    # Extra fix: Remove duplicate consecutive **sentences** inside the text
+    sentences = text.split(". ") 
+    unique_sentences = []
+    for sentence in sentences:
+        if sentence and sentence not in unique_sentences:
+            unique_sentences.append(sentence)
+    return ". ".join(unique_sentences)
+
 def scrape_comments():
+
     """Extracts all comments from the currently loaded page."""
+
     data = []
     
     # Extract all comment containers
@@ -65,7 +91,10 @@ def scrape_comments():
 
             # Extract comment text
             comment_elements = comment_block.find_elements(By.XPATH, ".//p")
-            comment_text = " ".join([el.text.strip() for el in comment_elements if el.text.strip()]) if comment_elements else "No comment text"
+            comment_text = " ".join([el.text.strip() for el in comment_elements if el.text.strip()])
+
+            # Apply duplicate removal function
+            comment_text = remove_repeated_text(comment_text.strip()) if comment_text else "No comment text"
 
             # Store extracted data
             data.append({"User": username, "Date": comment_date, "Time": comment_time, "Comment": comment_text})
